@@ -39,3 +39,26 @@ Here assumes you already have Vagrant and VM provider (e.g. VMWare, VirtualBox, 
 **EXTRAS:**
 
 - Optionally, you can use <a href="https://vagrantfile-generator.vercel.app/">Online Vagrantfile Generator</a> to provide the custom configuration and download the configured Vagrantfile online.
+
+## Syned Folders / Folder Sharing
+
+By default, the folder where you have `Vagrantfile` is shared to the `/vagrant` folder in the VM.
+
+To disable the default folder sharing mentioned in the statement above, add the below code line in `Vagrantfile` to disable it.
+
+```ruby
+config.vm.synced_folder ".", "/vagrant", disabled: true
+```
+
+### Code line in `Vagrantfile` for syncing folder
+
+```ruby
+config.vm.synced_folder "<host_folder_path>", "<VM_folder_path>"
+```
+
+You may add multiple lines of the sample code line above, if you have multiple folders to be synced.
+
+**NOTE:**
+
+- Synced folders are automatically setup during `vagrant up` and `vagrant reload`.
+- For more information on synced folder with Vagrant, can refer to this <a href="https://developer.hashicorp.com/vagrant/docs/synced-folders">link</a>.
