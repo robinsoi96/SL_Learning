@@ -7,7 +7,7 @@
 | `ls` | List all files and directories in the current directory, where all non hidden files and directories are not listed in new separate line respectively <br><br> You can run `ls <DIR_NAME>` to list all content in the directory `<DIR_NAME>` |
 | `ls -a` | List all files including hidden files <br><br> Hidden file listed will have `.` in front of the filename listed <br><br> Extras: <br> When running `ls -a`, you will also see files named `.` and `..` <br> `.` refers to current directory & `..` refers to parent directory |
 | `ls -A` | Same as `ls -a`, except it does not show current directory (`.`) and parent directory (`..`)|
-| `ls -F` | This command can help you to identify whether the listed items are files or directories <br><br> If you see `/` at the end of the item listed, it is a directory. If not, it is a file. <br><br> For special files, you will see character such as `!` , `@` or `#` is append to the filename |
+| `ls -F` | This command can help you to identify whether the listed items are files or directories <br><br> If you see `/` at the end of the item listed, it is a directory. If not, it is a file. <br><br> For special files, you will see character such as `!` , `@` or `#` is append to the filename <br> <ul><li>`/` : Directory</li><li>`@` : Link or Symbolic link</li><li>`*` : Executable</li><li>`\|` : FIFO (First In, First Out) or pipe</li><li>`=` : Socket</li><li>(Nothing) : Regular non-executable file</li></ul>|
 | `ls -l` | List where every files and directories are at separate line <br><br> For each filename in each line, it will also tell you the file type, permissions, number of links, owner, group, file size, last datetime modifed, and the filename <br><br> You can run `ls -lh`, so that the file size is in a human-readable format like KB,MB,GB instead of just raw bytes |
 | `ls -g ` | List all files and directories with the group name <br> Owner name will not be displayed in the output |
 | `ls -i ` | Print inde number of each files and directories |
@@ -16,8 +16,19 @@
 | `ls -r` | List all files and directories in reverse order |
 | `ls -R` | Shortlist all directories content |
 | `ls -t` | Sorted by modified time, started with the newest file |
+| `ls --color` | Enforce colourize output of `ls` |
 
 For more info on how to play around with `ls` command, can either run `man ls` in Linux system or search on the internet
+
+**EXTRAS:**
+
+There is `tree` command you can use, which is similar to `ls -R`, but creates visual output
+
+- `tree` : Show content of directory in a hierarchical, tree-like format
+- `tree -C` : Same as `tree` but enforce colourize the output
+- `tree -d` : `tree` but list directories only
+
+You may or may not have `tree` installed by default. If not, just install it if you want to.
 
 ## View Content of File
 
@@ -88,9 +99,38 @@ NOTE:
 - `<Source>` can be either file or directory
 - `<Destination>` can only be a directory
 
+## Making Files and Directories
+
+- `touch <filename>` to make new empty file
+- `mkdir <filename>` to make single level directory
+- `mkdir -p <filename>` to make multi-level directory
+
+**EXTRAS:**
+
+- `<editor><filename>` to use editor (e.g. vim, nano, etc) to create and then save content to make new file
+    
+    - On how to utilizing different editors, please check on internet
+
 ## Removing Files and Directories
 
 - `rm <filename>` to remove file
 - `rmdir <directory>` to remove empty directory
 - `rm -r <filename>` to remove file / directory recursively
 - `rm -rf <filename>` to remove file / directory recursively and forcefully
+
+## File Archiving Utility
+
+| Command used | File format | Extract Command | Archive or Compress Command |
+|:---:|:---:|:---:|:---:|
+|`tar` command with `-z` option| .tar.gz / .tgz | `tar -zxvf <FILE>.tar.gz` <br><br> `-k` : Keep existing `<FILE>` | `tar -zcvf <FILE>.tar.gz <DIRECTORY>` |
+|`tar` command with `-j` option| .tar.bz2 | `tar -jxvf <FILE>.tar.bz2` <br><br> `-k` : Keep existing `<FILE>` | `tar -jcvf <FILE>.tar.bz2 <DIRECTORY>` |
+|`tar` command with `-J` option| .tar.xz | `tar -Jxvf <FILE>.tar.xz` <br><br> `-k` : Keep existing `<FILE>` | `tar -Jcvf <FILE>.tar.xz <DIRECTORY>` |
+|`tar` command | .tar | `tar -xvf <FILE>.tar` <br><br> `-k` : Keep existing `<FILE>` | `tar -cvf <FILE>.tar <DIRECTORY>` |
+| `gunzip` / `gzip` <br><br> Extras: <br> `gzcat` / `zcat` : `gunzip -c` to view compressed files | .gz | `gunzip <FILE>.gz` <br><br> EXTRAS: <br> **Recursively decompress all files in directory <br> `gunzip -r <DIRECTORY>` <br><br> `-k` : Keep existing file | `gzip <FILE>` <br><br> EXTRAS: <br> **Recursively decompress all files in directory <br> `gzip -r <DIRECTORY>` |
+| `unzip` / `zip` | .zip | `unzip <FILE>.zip` | `zip -r <FILE>.zip <DIRECTORY/FILE>`|
+
+## Check Disk Usage by File 
+
+- `du [FILE]` : Estimates file usage
+- `du -k [FILE]` : Display sizes in kilobytes
+- `du -h [FILE]` : Display sizes in human readable format
