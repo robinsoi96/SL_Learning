@@ -205,4 +205,20 @@ command > file 2>&1 # Redirecting STDOUT and STDERR to the file
 
 command >> file 2>&1 # Redirecting STDOUT and STDERR, but appending to the file
 # Same as command &>> file
+
+# EXTRAS:
+# You can use redirection with /dev/null (Null Device) as a "black hole" or "bit bucket" to discards all data written to it, or redirect output to nowhere
+
+command > /dev/null # Discards standard output (STDOUT)
+# Useful when you only care about whether a command succeeds or fails, not its output
+
+command 2> /dev/null # Discards standard error (STDERR)
+# Hides error messages while still showing the normal program output
+
+command > /dev/null 2>&1 # Discard both STDOUT and STDERR
+# This makes the command completely silent
+
+## EXTRA KNOWLEDGE:
+# /dev/null also useful to empty large log file without deleting it, together with cat command, as the sample command below
+cat /dev/null > logfile
 ```
