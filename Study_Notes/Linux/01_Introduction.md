@@ -36,18 +36,47 @@ Many open-source licenses exist with different particulars
 
 <img src="images/Linux_Architecture.png" alt="Architecture of Linux">
 
-## Some Important Directories in Linux
+## Important Directories in Linux
 
-- Home Directories: `/root` , `/home/<USERNAME>`
-- User Executable: `/bin` , `/usr/bin` , `/usr/local/bin`
+- "Root" Directory (top of the file system hierarchy) : `/`
+- Home Directory for root account: `/root`
+- Home Directories for users: `/home/<USERNAME>`
+- Binaries & User Executable: `/bin` , `/usr/bin` , `/usr/local/bin`
 - System Executable: `/sbin` , `/usr/sbin` , `/usr/local/sbin`
 - Other Mountpoints: `/media` , `/mnt`
 - Configuration: `/etc`
-- Temporary Files: `/tmp`
+- Temporary Files (typically cleared on reboot): `/tmp`
 - Kernels and Bootloader: `/boot`
-- Server Data: `/var` , `/srv`
+- Server-specific & Service-specific Data: `/srv`
 - System Information: `/proc` , `/sys`
 - Shared Libaries: `/lib` , `/usr/lib` , `/usr/local/lib`
+- Libraries, 64 bit: `/lib64`
+- Optional or third party software: `/opt`
+- User Related: `/usr`
+- Variable Data (most notably log files): `/var`
+- Control Groups hierarchy: `/cgroup`
+- Device: `/dev`
+- Shared File Systems: `/export`
+- File System for recovery: `/lost+found`
+- SELinux (Security-Enhanced): `/selinux`
+
+**NOTE:**
+
+1) The most common directories to know are:
+
+    - `/`
+    - `/bin`
+    - `/etc`
+    - `/home`
+    - `/opt`
+    - `/tmp`
+    - `/usr`
+    - `/var`
+
+2) Applications that are not part of the base OS can be installed in:
+
+    - `/usr/local`
+    - `/opt`
 
 ## Popular Linux distros
 

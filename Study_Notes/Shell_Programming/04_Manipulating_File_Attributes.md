@@ -188,9 +188,9 @@ X###
 
 `X`: Indicates bit to set permission bit
 
-| Permission bit value | Represents |
+| Permission bit value (`X`) | Represents |
 |:---:|:---:|
-| `0` | No special permission enabled |
+| `0` or leave it blank | No special permission enabled |
 | `4` | SUID |
 | `2` | SGID |
 | `1` | Sticky bit |
@@ -233,4 +233,61 @@ chown <OPTIONS> <NEW_OWNER_NAME>:<NEW_GROUP_NAME> <FILE(S)>
 Things to take note: 
 
 - `<OPTIONS>` on these sample `chown` commands above, can run `man chown` for more information.
+
 - You can use `chgrp` to change group of the file, but `chown` is still recommended, because it is more portable across different Linux system even for older systems and also can be used to change owner and group of the file.
+
+    - `chgrp <NEW_GROUP_NAME> <FILE(S)>` is the command line for `chgrp` execution
+
+## File Creation Mask
+
+File creation mask determines **default permissions**.
+
+If no mask is used, permissions would be:
+
+- `777` for directories
+- `666` for files
+
+It can be overwritten by using `umask` command
+
+- `umask` : View current mask in numeric
+
+- `umask -S` : View current mask in symbolic
+
+- Generic syntax of `umask` command execution:
+
+    ```shell
+    umask -S [mode] # For symbolic
+    umask [mode] # For numeric
+    ```
+
+- `umask` works the opposite compared to `chmod`
+
+    - e.g. `umask 022`
+
+        | | Directory | File |
+        |:---:|:---:|:----:|
+        | Base Permission | 777 | 666 |
+        | Subtract `umask` | 022 | 022 |
+        | Creation Permission | 755 | 644 |
+    
+    - Common `umask` modes: 
+
+        - `022`
+        - `002`
+        - `077`
+        - `007`
+    
+    - Octal value corresponds to permissions:
+
+        | Octal | Binary | Directory Permissions | File Permissions |
+        |:---:|:---:|:---:|:---:|
+        | `0` | 000 | rwx | rw- |
+        | `1` | 001 | rw- | rw- |
+        | `2` | 010 | r-x | r-- |
+        | `3` | 011 | r-- | r-- |
+        | `4` | 100 | -wx | -w- |
+        | `5` | 101 | -w- | -w- |
+        | `6` | 110 | --x | --- |
+        | `7` | 111 | --- | --- |
+    
+    - `umask`command also can add 1 number (representing [special mode](#suid-and-sgid-file-permissions)) in front of the 3 octal numbers for `umask`
