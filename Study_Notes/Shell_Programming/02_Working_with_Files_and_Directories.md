@@ -134,3 +134,32 @@ NOTE:
 - `du [FILE]` : Estimates file usage
 - `du -k [FILE]` : Display sizes in kilobytes
 - `du -h [FILE]` : Display sizes in human readable format
+
+## Comparing Content of Files
+
+- `diff file1 file2` : Compare two files
+
+    - `<LineNum_file1><Action><LineNum_file2>`, where `<Action>` can be (`a`)dd , (`c`)hange or (`d`)elete
+
+    - `<` : Diff line from file1
+
+    - `---` : Separator between two files' lines in a change hunk
+
+    - `>` : Diff line from file 2
+
+    - Here only explain on `diff` command, you may explore yourself on `diff -u` (Unified Format), `diff -c` (Context Format), `diff -y` (Side-by-side), `diff -q` (Brief Output, where only report if files differ)
+
+- `sdiff file1 file2` : Side-by-side comparison
+
+    - `|` : Differing line(s)
+    - `<` : Additional line from file1
+    - `>` : Additional line from file2
+
+- `vimdiff file1 file2` : Highlight differences in vim
+
+    - Important command modes:
+
+        - `Ctrl+w w` : Go to next window
+        - `:q` : Quit (close current window)
+        - `:qa` : Quit all (close both files)
+        - `:qa!` : Force quit all
