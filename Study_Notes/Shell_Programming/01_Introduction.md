@@ -53,3 +53,55 @@ Different **C-type shells** follow:
 
 * C shell (csh)
 * TENEX/TOPS C shell (tcsh)
+
+## Customizing Shell Prompt
+
+We can use an environment variable to customize the shell prompt.
+
+- `bash`, `ksh` and `sh` use **$PS1**
+- `csh`, `tcsh` and `zsh` use **$prompt**
+
+### Customizing the prompt with `$PS1`
+
+You can run the below the command to check what is current value of `$PS1`:
+
+```shell
+echo $PS1 # Check the current shell prompt format given
+```
+
+For temporary change which only on the current session, you can do as below:
+
+```shell
+export PS1="<$PS1_value>"
+```
+
+For persist `$PS1` change, can do as below:
+
+```shell
+# Method 1:
+echo 'export PS1="<$PS1_value>"' >> ~/.bash_profile
+
+# Method #2:
+echo 'export PS1="<$PS1_value>"' >> ~/.bashrc
+source ~/.bashrc # This might need to make the new $PS1 value effective
+```
+
+Common `$PS1` Escape Sequences:
+
+- `\d` : Date in "Weekday Month Date" format, e.g. "Tue May 26"
+- `\h` : Hostname up to the first period, or hostname up to the first `.`, or short hostname
+- `\H` : Full hostname 
+- `\n` : Newline
+- `\t` : Current time in 24-hour HH:MM:SS format
+- `\T` : Current time in 24-hour HH:MM:SS format
+- `\@` : Current time in 12-hour am/pm format
+- `\A` : Current time in 24-hour HH:MM format
+- `\u` : Username of the current user
+- `\w` : Current working directory
+- `\W` : Basename of the current working directory
+- `\$` : Displays `$` for normal users, and `#` for root user
+
+Method to add colours:
+
+- Use ANSI escape sequences (For more information, can explore on Internet)
+- Enclosed with `\[` and `\]`

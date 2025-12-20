@@ -142,7 +142,8 @@ export PATH=/bin:$PATH
 echo $envVarName
 
 # Command to print all environment variables
-env
+env # Method #1
+printenv # Method #2
 ```
 
 ## Special Shell Variables
