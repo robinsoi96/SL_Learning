@@ -71,6 +71,68 @@ It act like the same way as copying files, except `Destination` got to be a dire
 
 If you want to copy multiple files and directories to a single destination directory, all your `Source` can be the files and directories you want to copy.
 
+### Transfering and Copying Files over the Network
+
+1) `scp` command
+
+    - **Secure Copy** with uses **Secure Shell (SSH) protocol**
+
+    - Use cases:
+
+        ```shell
+        # Generic scp command
+        scp <SOURCE_FILE_PATH> <USER>@<IP_ADDRESS>:<DESTINATION_PATH>
+
+        # scp command specifying port number
+        scp -p <Port_Number> <SOURCE_FILE_PATH> <USER>@<IP_ADDRESS>:<DESTINATION_PATH>
+
+        # scp command to copy entire source directory
+        scp -r <SOURCE_DIRECTORY_PATH> <USER>@<IP_ADDRESS>:<DESTINATION_PATH>
+        ```
+
+2) `sftp` command
+
+    - **Secure File Transfer Protocol**
+    - Command for interactive SFTP session:
+
+        ```shell
+        sftp <USER>@<IP_ADDRESS>
+        ```
+
+        - Once inside `sftp>` prompt, below are some commands you can use:
+
+            - `ls` : List files on remote system
+            - `lls` : List files on local system
+            - `cd` : Change remote directory
+            - `lcd` : Change local directory
+            - `pwd` : Print remote working directory
+            - `lpwd` : Print local working directory
+            - `get <REMOTE_FILE>` : Download a file (remote to local)
+            - `put <LOCAL_FILE>` : Upload a file (local to remote)
+            - `get -r <REMOTE_DIRECTORY>` : Download a directory (remote to local)
+            - `put -r <LOCAL_DIRECTORY>` : Upload a directory (local to remote)
+            - `mkdir` : Create a remote directory
+            - `lmkdir` : Create a local directory
+            - `rm` : Delete a remote file
+            - `rmdir` : Delete a remote directory
+            - `chmod` : Change permissions on files and directories
+            - `help` : Display a lis of all commands
+            - `exit` : Close the connection
+
+    - Command for non-interactive SFTP session (useful for bash scripting):
+
+        ```shell
+        sftp -b <Your_script> <USER>@<IP_ADDRESS>
+        ```
+
+        - For this, write all your sftp commands in your script
+
+3) `ftp` command
+
+    - **File Trasnfer Protocol**
+    - Works the same way as `sftp` but less secure
+    - Therefore, not recommended to use it, unless you are on legacy machine with does not support `sftp`
+
 ## Moving / Renaming Files and Directories
 
 You can use `mv` sample commands as below to rename or move file or directory
@@ -163,3 +225,15 @@ NOTE:
         - `:q` : Quit (close current window)
         - `:qa` : Quit all (close both files)
         - `:qa!` : Force quit all
+
+## Check File Type
+
+```shell
+file <FILENAME>
+```
+
+## Display Printable Strings in Binary File
+
+```shell
+strings <BINARY_FILENAME>
+```
