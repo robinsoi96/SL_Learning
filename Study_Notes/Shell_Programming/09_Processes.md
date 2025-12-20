@@ -20,6 +20,9 @@ By default, every command you executed is in the foreground.
 
 When the command is running, you cannot run any other commands until the current command is done executed.
 
+- `Ctrl + c` to kill foreground process
+- `Ctrl + z` to suspend foreground process for most systems (To verify, run `stty -a`)
+
 **NOTE:**
 - When you log off or are disconnected from the system by a communication problem, your process will be termined
 - If you have a long running process that you do not want terminated, you need to use the nohup command, where nohup stands for no HUP (Hang UP) 
@@ -35,11 +38,21 @@ The simplest way to start a background process is to **add an ampersand (`&`) at
 
 ### Running background process
 
-1) When you run a background process, you will **instantly see an output line** where: <br> - **1st field** is the **job number or ID** <br> - **2nd field** is the **process ID (PID)**
+1) When you run a background process, you will **instantly see an output line** where:
+
+    - **1st field** is the **job number or ID**
+    - **2nd field** is the **process ID (PID)**
 
 2) After that, you will **see the output of the background process as the process is running in the background.**
 
-3) When you **press Enter key after the background process has done its execution**, you will **see a line**, where: <br> - **1st field** is the **job number or ID** <br> - **2nd field** is the **status of the job or exit code of the job** <br> - **3rd field** is the **command**
+3) When you **press Enter key after the background process has done its execution**, you will **see a line**, where:
+    
+    - **1st field** is the **job number or ID** 
+        - `+` indicates the latest background job triggered
+        - `-` indicates the last background job before the latest bckground job
+        - **NOTE:** `+` and `-` can be used as job number
+    - **2nd field** is the **status of the job or exit code of the job**
+    - **3rd field** is the **command**
 
 **NOTE:**
 
@@ -62,7 +75,8 @@ When you **suspend the current foreground process**, you will **see a line**, wh
 
 To resume the job in background, use `bg` command as below:
 
-```
+```shell
+    # Background a suspended foreground process
     bg %<job_number>
 ```
 
@@ -70,7 +84,7 @@ To resume the job in background, use `bg` command as below:
 
 When you have a process that is in the background or suspended, you can use `fg` command as below to move it to foreground.
 
-```
+```shell
     fg %<job_number>
 ```
 
@@ -82,7 +96,7 @@ There are 2 main methods to run `nohup` command:
 
 1) Save the process output to default nohup.out file
 
-```
+```shell
     nohup <command> &
 ```
 
@@ -91,7 +105,7 @@ If you keep on **running the same `nohup` syntax for different command** as abov
 
 2) Save the process output to specific file
 
-```
+```shell
     nohup <command> > <filename> &
 ```
 
@@ -109,19 +123,19 @@ There are 3 ways to use `wait` command
 
 1) With no options [Wait until all background jobs to finish]
 
-```
+```shell
     wait
 ```
 
 2) With a process ID [Wait until the specific PID to finish]
 
-```
+```shell
     wait <PID>
 ```
 
 3) With a job number prefixed with a percent sign [Wait until the specific job number to finish]
 
-```
+```shell
     wait %<job_number>
 ```
 
@@ -176,20 +190,60 @@ Below are the table to explain all BSD syntax accordingly.
 | `x` | Shows information about processes without terminals (daemons and jobs running nohup) |
 | `u` | Shows additional information or display in a more verbose format (acts like `ps -f`)|
 
+### Visualize hierarchical relationship (tree relationship) between parent and child processes
+
+1) `ps -eH`
+
+    - Show tree relationship with **standard indentation**
+
+2) `ps -e --forest`
+
+    - Show tree relationship with **ASCII art lines** (`\_`)
+    - Optionally, you can run `ps -ef --forest` or `ps auxf` for full detail
+
+3) `pstree`
+
+    - Show tree relationship with **graphical tree** (`─┬─`) for readability
+
+        - **NOTE:** By default, it merges identical branches (e.g., if you have 10 `apache2` processes, it shows `10*[apache2]`) to keep the output compact
+    
+    - `pstree -p` : Shows Process IDs (PIDs).
+    - `pstree -u <USER>` : Shows user transitions.
+    - `pstree -h` : Highlights the current process and its ancestors.
+    - `pstree -a` : Includes full command-line arguments in the tree view for more detail.
+
 ## Killing a Process (`kill` Command)
+
+Generic syntax to run `kill` command:
+
+```shell
+# Method #1 : with job number
+kill [-SIG] %<job_number> 
+# Method #2 : with PID
+kill [-SIG] <PID>
+
+# SIG == signal
+# To check all available signal, run the below command
+kill -l
+# From there, you can see as the listing consists as below:
+# <NUM>)SIG<NAME>
+# The SIG in [-SIG] mentioned can be either <NUM> or <NAME>
+```
 
 There are 2 methods to run `kill` command:
 
 1) With job number
 
-```
+```shell
     kill %<job_number>
 ```
 
 2) With process ID
 
-```
+```shell
     kill <PID>
+    # Equivalent to kill -15 <PID>
+    # Also, equivalent to kill -TERM <PID>
 ```
 
 `kill` commands as above will **send the `TERM` signal** to its child processes if applicable **to shut down the process** and eventually itself.
@@ -198,12 +252,12 @@ There are 2 methods to run `kill` command:
 
 If a process ignore a regular `kill` command, you can use `kill -9` command accordingly as below syntax examples.
 
-```
-    kill -9 %<job_number>
-
-            or
+```shell
+    kill -9 %<job_number> # Method #1
     
-    kill -9 <PID>
+    kill -9 <PID> # Method #2
+
+    ## EXTRAS: kill -9 == kill -KILL
 ```
 
 - This will forces the process to end
@@ -215,7 +269,7 @@ If a process ignore a regular `kill` command, you can use `kill -9` command acco
 
 `nice` command is used to **set priority of the new command**.
 
-```
+```shell
     nice <priority_number> <new_command>
 ```
 
@@ -234,19 +288,19 @@ Below are 3 cases of using `renice` command:
 
 1) Change priority of a process (use `-p` option)
 
-```
+```shell
     renice -n <new_nice_value> -p <PID>
 ```
 
 2) Adjust priority of all processes belong to specific user (use `-u` option)
 
-```
+```shell
     renice -n <new_nice_value> -u <UID_or_User_ID_number>
 ```
 
 3) Adjust priority of all processes belong to specific process group (use `-g` option)
 
-```
+```shell
     renice -n <new_nice_value> -g <GID_or_Group_ID_number>
 ```
 
@@ -262,6 +316,10 @@ Below are 3 cases of using `renice` command:
 It works very similar to Task Manager in Windows OS.
 
 To quit the `top` command, just enter `q`.
+
+Key in `?` for help.
+
+**EXTRAS:** `htop` is very similar to `top`, except it is more colourful and interactive with Function keys
 
 ## Types of Processes
 
