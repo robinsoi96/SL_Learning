@@ -58,3 +58,91 @@ Some popular examples of syslog server:
 - syslogd
 - rsyslog
 - syslog-ng
+
+### Setup with `rsyslog`
+
+**NOTE:** The following concepts which going to explain below can apply to any other syslog server
+
+The main configuration file for `rsyslog` is `/etc/rsyslog.conf`
+
+- Can add this line `$IncludeConfig /etc/rsyslog.d/*.conf` to include all config file in `/etc/rsyslog.d`
+
+    - This is useful to add new supplmentary configuration snippets of logging rules in those other config files, instead of put all of them into a single main configuration file `/etc/rsyslog.conf`
+
+    - **EXTRAS:** Files in `/etc/rsyslog.d` are processed in **lexical order** (e.g. 10-first.conf runs before 50-extra.conf)
+
+- All rsyslog config files can understand legacy syntax and modern syntax (`RainerScript`)
+
+    - Legacy Syntax:
+
+        - Written in single-line directives
+        - Limited to basic selector-based filtering (e.g. `*`, `.`, `,`, `;`, `@`, `-`), and uses shorthand like `~` to discard messages
+        - Uses directives (e.g. `$ModLoad`, `$Action...`, etc)
+        - Reference documentations, please click on [sysklogd format](https://www.rsyslog.com/doc/configuration/sysklogd_format.html) & [legacy configuration directives](https://www.rsyslog.com/doc/configuration/index_directives.html)
+
+    - Modern Syntax (RainerScript):
+
+        - Written in structured, block-based format (using `()` and `{}`) that keeps the related parameters together
+        - Supports elaborate control-of-flow with `if/then/else` logic, nesting, and explicit `stop` statements
+        - Uses object blocks (e.g. `module()`, `action()`, etc)
+        - Reference documentation, please click [here](https://www.rsyslog.com/doc/rainerscript/index.html)
+
+- The processing order in the configuration files is from **top to bottom**.
+
+Full proper documentation on `rsyslog`, can refer to this [link](https://www.rsyslog.com/doc/about/index.html)
+
+## `logger` Command
+
+The `logger` command in Linux provides a shell interface to the system log module (syslog or systemd-journald), **allowing users and scripts to send custom messages to the system log files**. 
+
+- This is useful for monitoring, troubleshooting scripts, and auditing system events. 
+
+- This command typically writes the message to `/var/log/syslog` or `/var/log/messages`, depending on your Linux distribution's configuration.
+
+- The entry will include a timestamp, the hostname, and the message content, along with a default facility and priority (usually `user.notice`).
+
+- You can view the message in the log file using `tail` command or `journalctl`
+
+Useful references on implementation:
+- [logger - Linux manual page](https://man7.org/linux/man-pages/man1/logger.1.html)
+- [How to use logger on Linux](https://www.networkworld.com/article/965762/using-logger-on-linux.html)
+- [The ‘logger’ Command: Linux System Administration Guide](https://ioflood.com/blog/logger-linux-command/)
+
+## `logrotate`
+
+`logrotate` is a standard Linux system utility that **automates the management of log files by rotating, compressing, removing, and sometimes mailing them**.
+
+- This process is crucial for preventing log files from growing uncontrollably and consuming all available disk space, which can lead to system instability
+
+Main file is `/etc/logrotate.conf`
+- Sets default parameters (e.g., weekly rotation, keep 4 logs, compress by default)
+- Includes application-specific configurations (`include /etc/logrotate.d`)
+
+All different configuration files (expect the main file `/etc/logrotate.conf`) for `logrotate` are in `/etc/logrotate.d`
+
+General format of configuration file for `logrotate`:
+
+```
+<global directive 1>
+<global directive 2>
+
+<file path matchers 1> {
+    <directive 1>
+    <directive 2>
+    ...
+    <directive n>
+}
+
+<file path matchers 2a> <file path matchers 2b> {
+    <directive 1>
+    <directive 2>
+    ...
+    <directive n>
+}
+```
+
+Useful references on setup and implementation:
+- [Rotating Logs With Logrotate in Linux](https://www.baeldung.com/linux/rotating-logs-logrotate)
+- [Setting up logrotate in Linux](https://www.redhat.com/en/blog/setting-logrotate)
+- [A Complete Guide to Managing Log Files with Logrotate](https://betterstack.com/community/guides/logging/how-to-manage-log-files-with-logrotate-on-ubuntu-20-04/)
+- [logrotate - Linux man page](https://linux.die.net/man/8/logrotate)
