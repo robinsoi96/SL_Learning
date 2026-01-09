@@ -134,3 +134,117 @@ mkfs.<File_System_Type> <device_path_name> # Option #2
 **EXTRAS:** 
 - Manual mount (running `mount <device_path_name> <mount_point>` command) will not persist between reboots
 - In order to make mounts persist beween reboots, add an entry in `/etc/fstab` file
+
+## Swap Space
+
+Swap space is a **dedicated area on a disk (partition or file) used as virtual memory**, extending your system's RAM by temporarily storing inactive data from RAM when the physical memory runs low.
+
+### How Swap Space Works?
+
+1) When physical memory (RAM) is full, the OS selects some memory pages that are inactive or least recently used (using algorithms like LRU &mdash; Least Recently Used)
+2) These pages are written from RAM to the swap space on the disk
+3) When those pages are needed again, they are read back from the swap space into RAM
+4) This process of moving pages between RAM and disk is called swapping or paging
+
+**NOTE:**
+- Despite its usefulness, accessing swap space is much slower than RAM due to disk I/O delays
+- OS combines RAM and swap space to create a larger virtual memory pool
+
+### Preparing Swap Space in Linux
+
+You can use `mkswap` command to crete the swap space.
+
+```shell
+mkswap /<swap_space_file_path>
+```
+
+To enable the swap partition, run this command : `swapon /<swap_space_file_path>`.
+
+Run `swapon -s` to see the swap devices in use.
+
+Use `swapoff` command to deactivate swap space.
+- `swapoff /<swap_space_file_path>` : Disable specific swap partition or file
+- `swapoff -a` : Disable all currently active swap spaces
+
+## `/etc/fstab` &mdash; The File System Table
+
+The `/etc/fstab` (filesystem table) file is a critical system configuration file in Linux that **stores information about available disks and partitions, defining how they should be automatically mounted when the system boots up**.
+
+Each entry or line of the file is made up of 6 fields (separated by space or tab):
+1) device
+2) mount point
+3) file system type
+4) mount options
+5) dump
+6) fsck (file system check) order
+
+More information on `/etc/fstab` entries, can refer to below links:
+- [fstab(5) — Linux manual page](https://man7.org/linux/man-pages/man5/fstab.5.html)
+- [Understanding /etc/fstab](https://www.geeksforgeeks.org/linux-unix/understanding-etc-fstab/)
+- [An introduction to the Linux /etc/fstab file](https://www.redhat.com/en/blog/etc-fstab)
+- [The /etc/fstab file on Linux Explained](https://www.computernetworkingnotes.com/linux-tutorials/the-etc-fstab-file-on-linux-explained.html)
+
+## `blkid` Command
+
+`blkid` command is a powerful utility used to **identify and display attributes of block devices**, such as hard drives, SSDs, and USB drives.
+
+The command provides crucial metadata attributes (tokens) stored within the device's content metadata, inclduing:
+- **`UUID`(Universally Unqiue Identifier)** : A unique 128-bit identifier for the device or partition
+- **`TYPE`** : The filesystem type (e.g. `ext4`, `swap`, etc)
+- **`LABEL`** : A human-readable label if one has been assigned to the partition
+- **`PARTUUID`** : A unique identifier for the partition itself
+
+## `lsblk` Command
+
+1) `lsblk` : Show information of block devices
+
+    - The information shown are:
+
+        - `NAME` : Device name
+        - `MAJ` : Corresponding major device number
+        - `MIN` : Corresponding minor device number
+        - `RM` : Whether the device is removable [**1 = removable**]
+        - `SIZE` : Size of device
+        - `RO` : Whether the device is read only [**1 = read only**]
+        - `TYPE` : Type of device
+        - `MOUNT` : Device's mount point
+
+2) `lsblk -a` : Show information of all block devices including the empty ones
+
+3) `lsblk -b` : Same as `lsblk`, but display the exact number of bytes for the size of device
+
+4) `lsblk -z` : Print zone model of block devices
+
+5) `lsblk -d` : Show information of block devices without slave entries
+
+6) `lsblk -i` : Make `lsblk` use ASCII characters for tree formatting
+
+7) `lsblk -m` : Display informatin about devices' owner, group and mode
+
+8) `lsblk -f` : Provides more advanced information specially about the data inside the partitions
+
+    - The information shown are:
+
+        - `NAME` : Device name
+        - `FSTYPE` : The type of filesystem (e.g. `ext4`, `xfs`, `vfat`)
+        - `LABEL` : The volume label assigned to partition
+        - `UUID` : Universally Unique Identifier
+        - `FSAVAIL` : Available space in the filesystem
+        - `FSUSE%` : Percentage of space used
+        - `MOUNTPOINT` : Device's mount point
+
+9) `lsblk -o <Column(s)_to_display>` : 
+
+    - Print all information columns mentioned for block devices
+    - `,` as delimiter for different columns
+    - Common columns can be `NAME`, `MAJ:MIN`, `FSTYPE`, etc
+
+## Labelling a file system
+
+Use `e2label` command to label a file system
+
+```shell
+e2label /<device_path_name> "<label>"
+
+e2label /<device_path_name> "" # If to clear a label
+```
