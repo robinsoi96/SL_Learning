@@ -113,3 +113,95 @@ Many open-source licenses exist with different particulars
 ### Wikipedia on list of Linux distributions
 
 Wikipedia link: <a href="https://en.wikipedia.org/wiki/List_of_Linux_distributions">List of Linux distributions</a>
+
+## Software Package Managers
+
+Software package managers are standards for bundling software files, common interface for managing software, and also ease of finding, installing and uninstalling software.
+
+To be able to use the utilities of software package managers, you need to have internet connected (for searching information and installation) and need to run with superuser or root privileges.
+
+### RPM distros
+
+1) **`yum`** (For RHEL 7 / CentOS 7 & earlier)
+
+    - `yum search <keyword>` : Searches package names and summaries for the `<keyword>`
+
+    - `yum info <package_name>` : Display package info
+
+    - `yum info "<pattern>"` : Display info of package(s) with `<pattern>`
+
+    - `yum install <package>` : Install package. You can add `-y` option to automatically answer `yes` for all installation prompts without the need to be interactive to the prompt
+
+    - `yum remove <package>` : Remove package
+
+    - `yum upgrade <package>` : Update package. Same as `yum update <package>`
+
+    - `yum update` : Update all installed packages to their latest version available in the repositories
+
+    - `yum upgrade` : Same actions as `yum update`, except it will remove the obsolete packages from the system. Typically used to upgrade distro's version
+
+2) **`dnf`** (For RHEL 8 / CentOS 8 & later)
+
+    - `dnf search <keyword>` : Searches package names and summaries for the `<keyword>`
+
+    - `dnf info <package_name>` : Display package info
+
+    - `dnf info "<pattern>"` : Display info of package(s) with `<pattern>`
+
+    - `dnf install <package>` : Install package. You can add `-y` option to automatically answer `yes` for all installation prompts without the need to be interactive to the prompt
+
+    - `dnf remove <package>` : Remove package
+
+    - `dnf upgrade <package>` : Update package. Same as `dnf update <package>`
+
+    - `dnf update` : Update all installed packages to their latest version available in the repositories
+
+    - `dnf upgrade` : Same actions as `dnf update`, except it will remove the obsolete packages from the system. Typically used to upgrade distro's version  
+
+    - `dnf autoremove` : Remove all unused dependencies from the system and keep the system clean
+
+3) **`rpm`**
+
+    - `rpm -qa` : List all installed packages
+
+    - `rpm -qf <file_path>` : List the file's package
+
+    - `rpm -ql <package>` : List the package's files
+
+    - `rpm -ivh <package>.rpm` : Install the package
+
+    - `rpm -e <package>` : Erase (uninstall) the package
+
+### DEB distros
+
+1) **`apt`**
+
+    - `apt-cache search <keyword>` : Searches package names and summaries for the `<keyword>` 
+
+    - `apt-get install <package>` : Install package. You can add `-y` option to automatically answer `yes` for all installation prompts without the need to be interactive to the prompt
+
+    - `apt-get remove <package>` : Remove package, but leaving configuration
+
+    - `apt-get purge <package>` : Remvoe package, and deleting configuration
+
+    - `apt-cache show <package>` : Display information about the package
+
+    - `apt-get update` : Update the local list of remote packages, and also to enable your system to download the latest version of package when running installation command
+
+    - `apt-get upgrade` : Upgrade all installed packages
+
+    - **IMPORTANT NOTE:** For newer distros such as Debian 8 & later and Ubuntu 16.04 & later, you can use `apt` command only instead of `apt-get` and `apt-cache`
+
+    - `apt autoremove` : Remove all unused dependencies from the system and keep the system clean
+
+2) **`dpkg`**
+
+    - `dpkg -l` : List the installed packages
+
+    - `dpkg -S <file_path>` : List the file's package
+
+    - `dpkg -L <package>` : List all the files in the package
+
+    - `dpkg -i <package>.deb` : Install the package
+
+    - `dpkg -r <package>` : Remove (uninstall) the package
