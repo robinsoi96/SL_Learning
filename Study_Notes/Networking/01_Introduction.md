@@ -67,8 +67,87 @@ The basic elements of a layered model are:
 
 <img src="./images/Data_Flow_in_OSI_Model.png" alt="Data Flow in OSI Model">
 
+## TCP/IP Model
+
+TCP/IP model is a layered networking framework that explains how data is communicated between devices over a ntwork using standardized protocols to ensure reliable and efficient transmission.
+
+- TCP = Transmission Control Protocol
+- IP = Internet Protocol
+
+TCP/IP is defined as a **four-layer architecture** consisting of `Application`, `Transport`, `Internet` and `Network Access` layers.
+
+- Standardized by RFC 1122, which specifies its structure and behaviour
+- Simpler and more practical than the [seven-layer OSI model](#osi-model-open-systems-interconnection-model)
+- Serves as the core framework of the modern Internet and networking systems
+
+### Illustration of Relationship between OSI and TCP/IP Models
+
+<img src="./images/OSI_vs_TCP_IP.png" alt="OSI vs TCP/IP">
+
+<br>
+
+### 4 Layers of TCP/IP Model
+
+1) `Application Layer`
+
+    - **Top layer of the TCP/IP model**, closest to the user, where applications like web browsers, email clients, and file-sharing tools interact with the network
+    - Provides an **interface between user software and the lower network layers** that handle data transmission, enabling seamless communication over the network
+    - Supports protocols such as HTTP, FTP, SMTP, and DNS
+    - Handles data formatting so information is correctly understood by both sender and receiver
+    - Provides encryption for secure communication
+    - Manages sessions to track ongoing connections
+
+2) `Transport Layer`
+
+    - Ensures reliable and efficient delivery of data between devices, managing segmentation, ordering and retransmission as needed
+        - **Segmentation and Reassembly** : Breaks large messages into packets and reassembles them at the destination
+        - **Reliable Delivery & Error Handling** : TCP checks for errors, resends lost data, and ensures correct order
+        - **Fast Communication** : UDP provides low-latency, connectionless delivery without error checking
+        - **Flow Control** : Prevents the receiver from being overwhelmed by regulating data flow
+        - **Multiplexing** : Uses port numbers to allow multiple applications to share the network simultaneously
+    
+    - **TCP** and **UDP** are two main transport layer protocols
+        
+        a) `TCP (Transmission Control Protocol)`:
+
+        <img src="./images/TCP.png" alt="TCP">
+
+        b) `UDP (User Datagram Protocol)`:
+
+        <img src="./images/UDP.png" alt="UDP">
+    
+    - For more details, may refer to this [link](https://www.geeksforgeeks.org/computer-networks/transport-layer-protocols/)
+
+3) `Internet Layer`
+
+    - Responsible for addressing, packaging, and routing data packets so they can travel across networks and reach the correct destination device
+
+    - Ensure that data can move between different networks efficiently
+        - **Logical Addressing** : Assigns IP addresses to identify source and destination devices
+        - **Packet Routing** : Determines the best path for data to travel across networks
+        - **Fragmentation and Reassembly** : Breaks large packets into smaller ones for transmission and reassembles them at the destination
+        - **Protocol Support** : Primarily uses IP (Internet Protocol), along with supporting protocols like ICMP for error reporting and ARP for address resolution
+
+4) `Network Access (Link Layer)`
+
+    - Responsible for **physically transmitting data over network hardware**, including cables, switches and wireless connections
+
+    - Handles how data is formatted for the network medium and ensures it reaches the next device on the path
+        - **Physical Transmission** : Sends and receives raw bits over physical media like Ethernet cables, fiber optics, or Wi-Fi
+        - **Framing** : Organizes data into frames for proper transmissio and recognition by devices
+        - **Error Detection** : Detects transmission errors using checksums or CRC
+        - **MAC Addressing** : Uses hardware addresses to identify devices within the same network segment
+        - **Access Control** : Determines how multiple devices share the same physical medium, avoiding collisions
+
+### How TCP/IP Model Works?
+
+<img src="./images/How_TCP_IP_works.png" alt="How TCP/IP Model Works?">
+
+<br>
+
 ## Appendix
 
 Reference link:
 
 - <a href="https://www.geeksforgeeks.org/computer-networks/open-systems-interconnection-model-osi/">What is OSI Model? - Layers of OSI Model</a>
+- <a href="https://www.geeksforgeeks.org/computer-networks/tcp-ip-model/">TCP/IP Model</a>
