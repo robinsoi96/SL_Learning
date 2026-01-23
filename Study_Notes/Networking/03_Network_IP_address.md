@@ -6,6 +6,76 @@ IP address, or Internet Protocol address, is a **unique string of numbers assign
 
 It **serves as an identifier** that **allows devices to send and receive data over the network**, ensuring that this data reaches the correct destination.
 
+## Components of IP Address
+
+IP address comprises of two parts:
+
+1) `Network ID`
+    - Network portion of IP address
+    - Tells routers what network the host belongs to and thus where to route data that is destined for that host
+
+2) `Host ID`
+    - Tells routers the specific device that the data should be delivered to
+
+Both network ID and host ID must be unique for proper routing.
+
+## Classful IP Addressing
+
+Address classes are used to **determine the network ID and host ID** on the IP address, using the 32-bit IP address space differently, providing more or fewer bits for the network part (network ID) of the address.
+
+`Class A` :
+
+- First octet value range : 1 to 127
+- Network ID range: `1.` to `127.`
+- Public IP range : `1.0.0.0` to `126.255.255.255`
+- Private IP range : `10.0.0.0` to `10.255.255.255`
+- Special IP range : `127.0.0.1` to `172.255.255.255`
+- Network bits : First **8** bits
+- Host bits: Remaining **24** bits
+- Subnet Mask : `255.0.0.0` (8 bits)
+- Use : Large networks
+- Example : Government organizations
+
+`Class B` :
+
+- First octet value range : 128 to 191
+- Network ID range : `128.0` to `191.255`
+- Public IP range : `128.0.0.0` to `191.255.255.255`
+- Private IP range : `172.16.0.0` to `172.31.255.255`
+- Subnet Mask : `255.255.0.0` (16 bits)
+- Network bits : First **16** bits
+- Host bits: Remaining **16** bits
+- Subnet Mask : `255.255.0.0` (16 bits)
+- Use : Medium-sized networks
+- Example : Universities
+
+`Class C` :
+
+- First octet value range : 192 to 233
+- Network ID range : `192.0.0` to `233.255.255`
+- Public IP range : `192.0.0.0` to `233.255.255.255`
+- Private IP range : `192.168.0.0` to `192.168.255.255`
+- Subnet Mask : `255.255.0.0` (16 bits)
+- Network bits : First **24** bits
+- Host bits: Remaining **8** bits
+- Subnet Mask : `255.255.255.0` (24 bits)
+- Use : Small networks
+- Example : Home and small businesses
+
+`Class D` :
+
+- First octet value range : 224 to 239
+- Range : `224.0.0.0` to `239.255.255.255`
+- Use : Multicast communication
+- Example : Video streaming
+
+`Class E` :
+
+- First octect value range : 240 to 255
+- Range : `240.0.0.0` to `255.255.255.255`
+- Use : Experimental and research
+- Not used for public networking
+
 ## Types of IP Address
 
 IP addresses can be classified in several ways based on their structure, purpose, and the type of network they are used in.
