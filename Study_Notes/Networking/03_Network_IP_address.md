@@ -129,6 +129,58 @@ Address classes are used to **determine the network ID and host ID** on the IP a
 - `0.0.0.0` to `0.255.255.255` (`0.0.0.0/8`):
     - Represents the **current network** and is used during initialization before a device is assigned a valid IP address
 
+## Classless Inter-Domain Routing (`CIDR`)
+
+Classless Addressing or CLDR was introduced in 1993 to replace classful addressing.
+
+CIDR is a method of IP address allocation and routing that allows more efficient use of IP addresses.
+- Unlike [traditional class-based addressing](#classful-ip-addressing), CIDR allocates IP addresses based on a network prefix rather than a fixed class (A,B, or C)
+
+### CIDR Notation
+
+```
+<IP_address>/<Prefix_Length>
+```
+
+- `<IP_address>` : Can be IPv4 or IPv6 address
+- `<Prefix_Length>` : Number of bits in the network prefix
+    - For IPv4 address, the range is 0 to 32 (Total: 32 bits)
+    - For IPv6 address, the range is 0 to 128 (Total: 128 bits)
+    - Specifies the number of consective bits from the left that are fixed for the network portion, as noted by `1`'s in the subnet mask
+
+<br>
+
+**Implementation Example:**
+
+Let's say given `192.168.1.0/24`:
+- `/24` means first 24 bits are the network part
+- Number of host bits = 8 (32 - 24) 
+    - NOTE: IPv4 has 32 bits in total
+- Subnet Mask : `255.255.255.0`
+    - Subnet Mask in bits: 11111111 11111111 11111111 00000000<sub>2<sub>
+- Available total IP addresses : 256 (2<sup>8</sup>)
+    - Total usable IP addresses : 254 (256 -2 [because `192.168.1.0` & `192.168.1.255` are not usable])
+- Available IP ranges : `192.168.1.0` to `192.168.1.255`
+    - Available usable IP ranges: `192.168.1.1` to `192.168.1.254`
+
+### Why CIDR?
+
+Classful addressing wastes IP addresses.
+
+For example (in IPv4 classful addressing):
+
+| Class | IPs Available | Hosts | Example Wastage |
+|:---:|:---:|:---:|:---:|
+| A | 2<sup>24</sup> | 2<sup>24</sup> - 2 | Too large for small orgs |
+| B | 2<sup>16</sup> | 2<sup>16</sup> - 2 | Wastes 49,150 hosts for 214 needed |
+| C | 2<sup>8</sup> | 2<sup>8</sup> - 2 | Small networks only |
+
+<br>
+
+**Problem:** Organizations often need a number of hosts that do not match class sizes, leading to wastage
+
+**Solution:** CIDR allows **flexible block allocation** matching exact requirements
+
 ## Types of IP Address
 
 IP addresses can be classified in several ways based on their structure, purpose, and the type of network they are used in.
