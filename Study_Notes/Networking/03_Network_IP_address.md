@@ -13,11 +13,30 @@ IP address comprises of two parts:
 1) `Network ID`
     - Network portion of IP address
     - Tells routers what network the host belongs to and thus where to route data that is destined for that host
+    - All hosts on the same physical network share the same network ID
 
 2) `Host ID`
     - Tells routers the specific device that the data should be delivered to
 
 Both network ID and host ID must be unique for proper routing.
+
+### Rules for Assigning Network ID
+
+- **Loopback restriction**:
+    - A network ID must not start with `127`, as this range belongs to Class A and is reserved for loopback functions
+- **All-zeros restriction**:
+    - A network ID with all bits set to 0 represents the local network, is not routed, and therefore, is not used for general network identification
+- **All-ones restriction**:
+    - A network ID with all bits set to 1 is reserved for broadcast purposes and cannot be assigned to a network
+
+### Rules for Assigning Host ID
+
+- **Uniqueness**:
+    - Each host ID must be unique within the same network
+- **All-zeros restriction**:
+    - A host ID with all bits set to 0 is not allowed, as it represents the network address
+- **All-ones restriction**:
+    - A host ID with all bits set to 1 is not allowed, as it is reserved for broadcast address used to reach all hosts in the network
 
 ## Classful IP Addressing
 
@@ -25,56 +44,90 @@ Address classes are used to **determine the network ID and host ID** on the IP a
 
 `Class A` :
 
-- First octet value range : 1 to 127
-- Network ID range: `1.` to `127.`
+- First octet value range : 0 to 127
+    - The MSB (Most significant bit) of first octet is always `0`, and the remaining 7 bits are used to identify the network
+- Network ID range: `0.` to `127.`
 - Public IP range : `1.0.0.0` to `126.255.255.255`
 - Private IP range : `10.0.0.0` to `10.255.255.255`
 - Special IP range : `127.0.0.1` to `172.255.255.255`
 - Network bits : First **8** bits
+    - Number of usable networks : 126 (2<sup>(8-1)</sup> - 2)
+        - `(8-1)` , because only 7 bits are used in 8 network bits
+        - `-2` , because each network cannot use end with `.0.0.0` or `.255.255.255`
 - Host bits: Remaining **24** bits
+    - Number of usable hosts : 16,777,214 (2<sup>24</sup> - 2)
+        - `-2` , because 2 addresses are reserved (Network ID and Broadcast address)
 - Subnet Mask : `255.0.0.0` (8 bits)
+- Broadcast Address : `XXX.255.255.255`
 - Use : Large networks
 - Example : Government organizations
 
 `Class B` :
 
 - First octet value range : 128 to 191
+    - The first 2 bits of the first octet are always `10`, and the remaining 14 bits are used to determine the network ID
 - Network ID range : `128.0` to `191.255`
 - Public IP range : `128.0.0.0` to `191.255.255.255`
 - Private IP range : `172.16.0.0` to `172.31.255.255`
-- Subnet Mask : `255.255.0.0` (16 bits)
 - Network bits : First **16** bits
+    - Number of usable networks : 16,382 (2<sup>(16-2)</sup> - 2)
+        - `(16-2)` , because only 14 bits are used in 16 network bits
+        - `-2` , because each network cannot use end with `.0.0` or `.255.255`
 - Host bits: Remaining **16** bits
+    - Number of usable hosts : 65,534 (2<sup>16</sup> - 2)
+        - `-2` , because 2 addresses are reserved (Network ID and Broadcast address)
 - Subnet Mask : `255.255.0.0` (16 bits)
+- Broadcast Address : `XXX.XXX.255.255`
 - Use : Medium-sized networks
 - Example : Universities
 
 `Class C` :
 
 - First octet value range : 192 to 233
+    - The first 3 bits of the first octet are always `110`, and the remaining 21 bits are used to determine the network ID
 - Network ID range : `192.0.0` to `233.255.255`
 - Public IP range : `192.0.0.0` to `233.255.255.255`
 - Private IP range : `192.168.0.0` to `192.168.255.255`
-- Subnet Mask : `255.255.0.0` (16 bits)
 - Network bits : First **24** bits
+    - Number of usable networks : 2,097,150 (2<sup>(24-3)</sup> - 2)
+        - `(24-3)` , because only 21 bits are used in 24 network bits
+        - `-2` , because each network cannot use end with `.0` or `.255`
 - Host bits: Remaining **8** bits
+    - Number of usable hosts : 254 (2<sup>8</sup> - 2)
+        - `-2` , because 2 addresses are reserved (Network ID and Broadcast address)
 - Subnet Mask : `255.255.255.0` (24 bits)
+- Broadcast Address : `XXX.XXX.XXX.255`
 - Use : Small networks
 - Example : Home and small businesses
 
 `Class D` :
 
 - First octet value range : 224 to 239
+    - The first 4 bits of the first octet are always `1110`, and the remaining 28 bits are used to represent the multicast group address that interested hosts can join
 - Range : `224.0.0.0` to `239.255.255.255`
+- Do not have network ID and host ID divisions
+- No subnet mask is defined
 - Use : Multicast communication
 - Example : Video streaming
 
 `Class E` :
 
 - First octect value range : 240 to 255
+    - The first 4 bits of the first octet are always `1111`
 - Range : `240.0.0.0` to `255.255.255.255`
+- Do not have network ID and host ID divisions
+- No subnet mask is defined
 - Use : Experimental and research
 - Not used for public networking
+
+### Range of Special IP Addresses
+
+- `169.254.0.0` to `169.254.255.255`:
+    - Used as **link-local addresess** when a device cannot obtain an IP address from a DHCP server
+- `172.0.0.0` to `127.255.255.255` (`172.0.0.0/8`):
+    - Reserved for **loopback addresses**, used to test network functionality on the local machine
+- `0.0.0.0` to `0.255.255.255` (`0.0.0.0/8`):
+    - Represents the **current network** and is used during initialization before a device is assigned a valid IP address
 
 ## Types of IP Address
 
