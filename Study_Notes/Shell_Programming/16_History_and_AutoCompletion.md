@@ -46,11 +46,13 @@ Every executed command is recorded to the shell history.
         - `!` here is equivalent to `!!`
         - `:N` here represents a word on the command line [e.g. `:0`=command, `:1`=first argument, etc]
     
-    - `!^` : First argument of previous (N-1) command == `!:1`
+    - `!^` : First argument ($1) of previous (N-1) command == `!:1`
 
-    - `!$` : Last argument of previous (N-1) command
+    - `!$` : Last argument ($N) of previous (N-1) command
 
-    - If add `:p` for all mentioned `!` syntax above, it will only print the 
+    - `!*` : All arguments of previous (N-1) command excluding the command (at index position $0)
+
+    - If add `:p` for all mentioned `!` syntax above, it will only print the content only (acts like `echo`), and not execute as a command
 
 4) `^<old_string>^<new_string>` : This **rerun the previous (N-1) command** but **`<old_string>` in the previous (N-1) command will be replaced with `<new_string>`**
 

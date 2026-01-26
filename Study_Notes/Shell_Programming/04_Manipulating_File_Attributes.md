@@ -114,13 +114,31 @@ From each of the permission access level listed above, you can see there are 3 d
 
 ### SUID and SGID File Permissions
 
-Special permissions make up a fourth access level in addition to `owner`, `group`, and `other`. Special permissions allow for additional privileges over the standard permission sets.
+**Special permissions** make up a fourth access level in addition to `owner`, `group`, and `other`. Special permissions allow for additional privileges over the standard permission sets.
 
 | Bit Name | Purpose | Implementation |
 |:---:|---|---|
 | `SUID` (Set User ID) bit | `SUID` = the special permission for the user access level has a single function <br><br> To update in execute bit of `owner` permission attribute | `s` = A file with SUID always executes as the user who owns the file, regardless of the user passing the command <br><br> `S` = If the file owner doesn't have execute permissions |
 | `SGID` (Set Group ID) bit | `SGID` = the special permission for the group access level has a single function <br><br> To update in execute bit of `group` permission attribute | `s` = If set on a file, it allows the file to be executed as the group that owns the file (similar to SUID). <br> However, if set on a directory, any files created in the directory will have their group ownership set to that of the directory owner <br><br> `S` = If the owning group does not have execute permissions |
 | `Sticky` bit | This permission does not affect individual files. <br><br> However, at the directory level, it restricts file deletion. Only the owner (and root) of a file can remove the file within that directory. | `t` = Sticky bit enabled, and other are allowed to execute <br><br> `T` = Sticky bit enabled, and other are not allowed to execute |
+
+**NOTE:**
+
+- For `SUID`:
+    - Enable it with octal method (**`u+s`**) or symbolic method (**`4XXX`**)
+        - If the owner permission is executable, you will see executable part of owner permission change from `x` to `s`
+        - If the owner permission is not executable, you will see executable part of owner permission change from `-` to `S`
+    - Disable it octal method (**`u-s`**) or symbolic method (**`0XXX`**)
+- For `SGID`:
+    - Enable it with octal method (**`g+s`**) or symbolic method (**`2XXX`**)
+        - If the group permission is executable, you will see executable part of group permission change from `x` to `s`
+        - If the group permission is not executable, you will see executable part of group permission change from `-` to `S`
+    - Disable it octal method (**`g-s`**) or symbolic method (**`0XXX`**)
+- For `Sticky bit`:
+    - Enable it with octal method (**`o+s`**) or symbolic method (**`1XXX`**)
+        - If the other permission is executable, you will see executable part of other permission change from `x` to `t`
+        - If the other permission is not executable, you will see executable part of other permission change from `-` to `T`
+    - Disable it octal method (**`o-s`**) or symbolic method (**`0XXX`**)
 
 ### Changing File and Directory Permissions
 

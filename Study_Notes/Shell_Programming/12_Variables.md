@@ -14,6 +14,14 @@ If variable value consists of spacing:
 varName="varValue"
 ```
 
+Assign output of a command to a variable:
+
+```shell
+varName=$(command) # Method #1
+
+varName=`command` # Method #2
+```
+
 Method to access the defined variable's value
 
 ```bash
