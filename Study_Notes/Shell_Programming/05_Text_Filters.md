@@ -36,6 +36,32 @@
     grep '<keyword>' <filename>
 ```
 
+### `grep` with Regular Expressions
+
+The preferred syntax:
+
+```shell
+grep -E "<keyword>" <filename>
+```
+
+- Of course, you can choose not to use `-E` option, but you will need to include `\`(escape sequence) in front of every wildcard character of the keyword which will be tedious and mistake-prone
+
+**Wildcards or Meta-characters can be used in the `grep -E` keyword:**
+
+- Can refer some [here](./06_Regular_Expressions.md#metacharacters-used-in-regular-expressions)
+- `|` : OR
+- `()` : Used to group expressions together
+- `^$` : Empty line
+- For more information, can always surf the Internet
+
+**NOTE:**
+
+You may add with `-o` option (form `grep -Eo`) to **print only the matching part** of the line.
+
+You may check `grep -P` on Internet to understand more on its usage compared to `grep -E`
+- `\K` in `grep -oP` is useful, where exclude some string or characters in front of the snippet of the keyword
+    - E.g. `grep -oP "hello \Kworld"` --> will print only `world`
+
 ## The `tr` Command
 
 Basic syntax of `tr` command is as below:

@@ -105,3 +105,40 @@ Method to add colours:
 
 - Use ANSI escape sequences (For more information, can explore on Internet)
 - Enclosed with `\[` and `\]`
+
+## Using `Shebang` in Shell Script
+
+The shebang is an interpreter directive used in Unix-like operating systems.
+- It is a **character sequence (`#!`)** that constitutes the **first line of a script**
+- The name `shebang` comes from its two characters:
+    - `#` : "sharp" symbol or "hash"
+    - `!` : "bang" or "exclamation" mark
+
+### Practical Application of `Shebang`
+
+You use shebang to **specifies the absolute path to the system interpreter required** to execute the commands within the script, and also **make the scripts portable to other machines**.
+
+**Method to use `shebang`:**
+
+1) Absolute path of interpreter
+
+    ```shell
+    #!/<interpreter_absolute_path>
+    ```
+
+    - Typically, preferred for shell interpreter like `bash` or `sh`
+        - E.g. `#!/usr/bin/bash` or `#!/usr/bin/sh`
+
+2) Using `env` to call the intepreter
+
+    ```shell
+    #!/usr/bin/env <interprter_name>
+    ```
+
+    - Preferred for non-shell interpreters like python (because different machine might install python in different path)
+    - Making your script portable
+
+**NOTE:**
+
+- To run your script, you will need to make the script executable with command `chmod +x <script>`
+- **It is always best to include `shebang` in your shell script**
