@@ -22,6 +22,8 @@ Escape sequences for `echo` command:
 | `\t` | Prints a tab character |
 | `\c` | Prints a string without a defaul trailing newline |
 
+**NOTE:** For these escape sequences to be effective, need to run with `echo -e` command
+
 #### `printf`
 
 1 major difference compared to `echo` command is that `printf` **explicitly requires the `\n` escape sequence at the end of the string, in order to print a newline**.
