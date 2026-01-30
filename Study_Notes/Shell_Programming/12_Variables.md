@@ -26,6 +26,14 @@ Method to access the defined variable's value
 
 ```bash
 echo $varName
+
+# EXTRAS:
+
+# Using single quote (') prevents substitution
+echo '$varName' # Output : $varName
+
+# Using double quote (") does not prevent substitution
+echo "$varName" # Output same as command "echo $varName"
 ```
 
 ## Array Variables
