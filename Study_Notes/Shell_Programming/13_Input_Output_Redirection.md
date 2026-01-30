@@ -161,6 +161,21 @@ Extras:
 
 `read` command is used to read user input.
 
+Most popular implementation of `read` command:
+
+```shell
+read -p "<prompt>: " <input_variable>
+# The prompt when the command executed: "<prompt>: "
+# Whatever you type to <input_variable> will be visible in the terminal
+# Hit Enter to end the prompt and the value you keyed in is updated to <input_variable>
+
+read -s -p "<prompt>: " <sensitive_input_variable>
+# The prompt when the command executed: "<prompt>: "
+# Whatever you type to <sensitive_input_variable> will not be visible in the terminal
+# Typically useful to key in credentials
+# Hit Enter to end the prompt and the value you keyed in is updated to <sensitive_input_variable>
+```
+
 For more info, may search from internet, or run `man read` in Linux.
 
 ## File Descriptors
