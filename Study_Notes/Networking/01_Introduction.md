@@ -2,6 +2,32 @@
 
 Computer networking is the practice of **connecting two or more computing devices to share data and resources**, using physical cables or wireless connections and a set of rules called communication protocols.
 
+## Basic Terminologies of Computer Networking
+
+1) `Network` : A group of connected computers and devices that can communicate and share data
+
+2) `Node` : Any device that can send, receive or forward data in a network
+    - E.g. Laptops, mobiles, printers, earbuds, servers, etc
+
+3) `Networking Devices` : Devices that manage and support networking functions
+    - E.g. Routers, switches, hubs, access points
+
+4) `Host` : Network-connected device that runs applications, acts as a source or destination for data, and has a complete network stack (server or client)
+
+    - `Server` : A host that offers services, data, or resources
+    - `Client` : A host that requests services or resources from a server
+
+5) `Transmission Media` : The physical or wireless medium through which data travels between devices
+
+    - `Wired media` : Ethernet cables, optical fibre
+    - `Wireless media` : Wi-Fi, Bluetooth, infrared
+
+6) `Service Provider Networks` : Networks offered by external providers that allow users or organizations to lease network access and capabilities. 
+    - E.g. internet providers, mobile carriers, etc
+
+7) `Firewall` : A security tool (hardware or software) that monitors network traffic. 
+    - Based on set rules, it either allows, blocks or drops data
+
 ## OSI Model (Open Systems Interconnection Model)
 
 OSI model is a **conceptual framework created by the `ISO (International Organization of Standardization)`**, that **standardizes network communication** by dividing it into 7 distinct layers, each with specific functions.
