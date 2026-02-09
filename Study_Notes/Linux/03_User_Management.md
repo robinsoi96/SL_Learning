@@ -378,8 +378,74 @@ sudo groupmod <options> <GROUP_NAME> # With sudo
     ```
 
 5) Use `visudo` to edit /etc/sudoers file, where you need to be in root user or superuser
+    - For more information, please refer the [sub-chapter below](#sudoers-file)
 
 6) `sudo` asks for **original user's password**
+
+## `sudoers` File
+
+`sudoers` file is a **critical configuration file** in Unix-like operating systems that defines which users or groups can execute commnds with superuser or root privileges, and under what conditions.
+
+In Linux, `/etc/sudoers` is the `sudoers` file.
+
+### Methods to Configure `sudoers` File
+
+**Method #1: Edit `/etc/sudoers` file directly**
+
+- Usually not recommended to perform
+- **Only editable and readable by root user or superuser**
+- Any single syntax error can lock all users (including root) out of administrative privileges, rendering the system unusable
+
+**Method #2: Run `visudo` command**
+
+- Safer than Method #1
+- Same method as Method #1, but it checks for syntax erros before saving, locks the file against concurrent edits and prevents corruption
+- `visudo` command must be **executed in root user or superuser only**
+- When executing this command, you will see you are editing `/etc/sudoers.tmp` and only be updated to `/etc/sudoers` after all syntax checking
+- Recommendation: **Only do this step when really need to edit `/etc/sudoers` file**
+
+**Method #3: Create a file in `/etc/sudoers.d/` directory**
+
+- Most recommended and safest method
+- In `/etc/sudoers` file, you will see **include directive** either `#includedir /etc/sudoers.d` or `@includedir /etc/sudoers.d`, where you can add new configuration file(s) in /etc/sudoers.d directory for **extra configuration line(s)** not included in /etc/sudoers file 
+- Just create a file and add new line(s) needed for `sudoers` configuration
+    - E.g. create new file which its name matches the username you wish to grant superuser privilege and then add line to enable superuser privilege
+
+### Contents to be Updated for `sudoers` File
+
+**NOTE:** All contents below are applicable to [all methods mentioned above](#methods-to-configure-sudoers-file)
+
+1) Decide permission entry rule
+
+    - Syntax:
+
+        ```shell
+        <user> <host>=(<Run_As_User>:<Run_As_Group>) <commands>
+        ```
+    
+        - `<user>` : User or group to whom the rule applies
+            - If it's user, just update the username as `<user>` [e.g. `root`]
+            - If it's group, add `%` in front of group name [e.g. `%admin` if it's admin group]
+        
+        - `<host>` : Hostname(s) on which rule is valid
+            - Typically, in single-machine setups, it is set to `ALL` for all hostnames
+        
+        - `<Run_As_User>:<Run_As_Group>` : Specifies the user(s) and group(s) as whom the command(s) can be executed
+            - Optional to fill in
+            - If omitted, the default value is `root`
+            - `<Run_As_User>` stand for user(s)
+            - `<Run_As_Group>` stand for group(s)
+            - Value `ALL` means all
+                - `ALL:ALL` --> All users and groups
+                - `:ALL` --> All groups only
+                - `ALL` ---> All users only
+                - Else, just mention particular user or/and group respectively
+        
+        - `<command>` : List of commands that the user is allowed to run with elevated privileges
+            - Commands must be specified with **absolute path**
+            - If applies to all commands, just update `ALL` as the value
+            - Add `NOPASSWD:` in front of `<command>` if you want the user or group to run the command without entering a password
+                - This is useful for automation
 
 ## Some Useful Commands for User Management
 
