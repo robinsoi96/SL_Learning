@@ -52,6 +52,8 @@ Ansible is designed around the following principles:
 
 ## Ansible Installtion
 
+For overall Ansible installation documentation, may refer to this <a href="https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html#control-node-requirements">link</a>.
+
 2 main methods:
 
 - <a href="https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html">Installing Ansible, mainly using `pip`</a>
