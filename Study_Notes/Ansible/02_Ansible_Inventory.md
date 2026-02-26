@@ -31,6 +31,34 @@ Usually used for **simple inventories with few variables**
     - If the managed host is not to be grouped or belong to `ungrouped` group, then the mentioned host will not need to have dedicated `[<group_name>]` above it
     - **NOTE:** All mentioned hosts are under `all` group to indicate all managed hosts mentioned
 
+2) Parent/Child group relationships:
+
+    ```ini
+    [<parent_group>:children]
+    <child_group>
+    ```
+
+    - Use `:children` suffix to define a parent group that contains other child group(s)
+
+3) Assigning host variables and group variables:
+
+    - Assign host variables:
+        ```ini
+        [<group_name>]
+        <managed_host> <host_variable_key_1>=<host_variable_value_1> <host_variable_key_2>=<host_variable_value_2>
+        ```
+        - Written in 1 line to assign host variable with managed host defined
+    
+    - Assign group variables:
+        ```ini
+        [<group_name>:vars]
+        <group_variable_key_1>=<group_variable_value_1>
+        <group_variable_key_2>=<group_variable_value_2>
+        ```
+        - `:vars` indicates section for group variables, but note that each group variable per line
+    
+    - Host variable will always take precedence and override the group variable
+
 ### `YAML` Format
 
 Used for **complex configurations, nested groups, and dynamic inventories that require complex data structures like lists or directonaries**
@@ -55,6 +83,39 @@ Used for **complex configurations, nested groups, and dynamic inventories that r
     - **Things to take note:**
         - `hosts:` is required to be written below respective group name to allow listing of managed hosts within respective group
         - When writing the managed host, `:` is required to add behind it
+
+2) Parent/Child group relationships:
+
+    ```yaml
+    <parent_group>:
+        children:
+            <child_group>:
+    ```
+
+    - Use `children:` entry to nest child group(s) under a parent group
+
+3) Assigning host variables and group variables:
+
+    - Assign host variables:
+        ```yaml
+        <group_name>:
+            hosts:
+                <managed_host>:
+                    <host_variable_key_1>: <host_variable_value_1>
+                    <host_variable_key_2>: <host_variable_value_2>
+        ```
+        - Host variables are written under managed host section
+    
+    - Assign group variables:
+        ```yaml
+        <group_name>: 
+            vars:
+                <group_variable_key_1>: <group_variable_value_1>
+                <group_variable_key_2>: <group_variable_value_2>
+        ```
+        - Use `vars:` entry to nest all group variables under the group
+    
+    - Host variable will always take precedence and override the group variable
 
 ## Appendix
 
