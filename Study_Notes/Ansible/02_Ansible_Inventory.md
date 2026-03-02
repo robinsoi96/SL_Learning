@@ -93,6 +93,14 @@ Used for **complex configurations, nested groups, and dynamic inventories that r
     ```
 
     - Use `children:` entry to nest child group(s) under a parent group
+    - **EXTRAS:** `all:` is also considered a group, so you can use `children:` entry in YAML file as sample below:
+        ```yaml
+        all:
+            children:
+                <parent_group>:
+                    children:
+                        <child_group>:
+        ```
 
 3) Assigning host variables and group variables:
 
