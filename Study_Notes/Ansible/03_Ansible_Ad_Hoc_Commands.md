@@ -36,3 +36,9 @@ Options explanation:
         - `--become` : run the command with superuser privilege
             - `--ask-become-pass` or `-K` : will prompt for password to proceed with superuser privilege
         - `-u <username>` : connect the managed host as `<username>`
+
+## Appendix
+
+Reference link:
+
+- [Introduction to ad hoc commands](https://docs.ansible.com/projects/ansible/latest/command_guide/intro_adhoc.html)

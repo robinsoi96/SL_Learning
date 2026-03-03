@@ -22,5 +22,11 @@ Typical example of playbook structure with 1 play:
         <module_parameter>: <module_parameter_value>
 ```
 
-- Here, you can write 2 or more plays in the same playbook. Just take note that each play triggered sequentially
+- Here, you can write 2 or more plays in the same playbook. Just take note that each play will be triggered sequentially if written in same playbook
 - If want different plays to run in parallel, then write in different playbooks respectively
+
+## Appendix
+
+Reference link:
+
+- [Ansible playbooks](https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html)
