@@ -21,4 +21,4 @@ def function_name(parameter_name: data_type) -> return_type:
     # function body
 ```
 
-- `-> return_type` syntax is known as `return type annotation`, written after te function parameters **specifies the expected type of value returned by the function**
+- `-> return_type` syntax is known as `return type annotation`, written after the function parameters **specifies the expected type of value returned by the function**
